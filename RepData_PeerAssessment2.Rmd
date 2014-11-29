@@ -12,34 +12,27 @@ Storms and other severe weather events can cause both public health and economic
 
 This project involves exploring the U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database. This database tracks characteristics of major storms and weather events in the United States, including when and where they occur, as well as estimates of any fatalities, injuries, and property damage.
 ```{r,warning=FALSE,message=FALSE}
-# Turn off scientific notations for numbers
-options(scipen = 999)  
-
-#Set locale
-Sys.setlocale("LC_ALL", "English") 
-
-
-
+##Use my standard openning including call function
+source('C:/Users/bryan_000/Documents/GitHub/MyWork/StdOpen.R')
 ```
 
 ###Data Processing 
 
 The data for this assignment come in the form of a comma-separated-value file compressed via the bzip2 algorithm to reduce its size.  The events in the database start in the year 1950 and end in November 2011. The dataset is downloaded and unzipped.
 ```{r,warning=FALSE,message=FALSE}
-##Set Working Directory
-setwd("C:/Users/bryan_000/Documents/GitHub/Data")
+##Set destination file for dowload 
+datafile <-paste(datadir,"stormData.csv.bz2",sep = "")
 
 ##Check to see if file exists, if not download it
-zip.file <- 'stormData.csv.bz2'
-if (!file.exists(zip.file))
+if (!file.exists(datafile))
        {
                 data.url <- 'http://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2'
-                download.file(data.url, zip.file) 
+                download.file(data.url, datafile) 
                 downloadedDataDate <- date()
        }
 
 ##Read and process the data
-data <- read.csv(bzfile(zip.file),header=TRUE, stringsAsFactors = FALSE)
+data <- read.csv(bzfile(datafile),header=TRUE, stringsAsFactors = FALSE)
 names(data) <- tolower(names(data))     ##make all column names lowercase
 names(data) <- gsub("_","",names(data)) ##remove underscores
 
